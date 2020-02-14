@@ -1,4 +1,6 @@
 #201bd-md07-elasticsearch
+##Prerequisites
+  * hotels-weather expedia data downloaded to HDFS from Spark streaming homework.
 * Set up and configure ELK.  
   * install ElasticSearch container
     ```docker pull elasticsearch:7.5.2 && /
@@ -12,10 +14,11 @@
  
  * Reconfigure Spark Streaming Job from “Spark Streaming” 
  lesson to publish data into Elastic (change the endpoint from HDFS to Elastic). 
- Make screenshots.   
+ Make screenshots.    
    * see comments in ElasticDataSaver clazz  
  
  * Run the Kibana, create a dashboard showing hotels categories (i.e. resulting type) from “Spark Streaming” lesson on the line chart with periodic update (each 10 seconds). Describe basic components (diagrams) in a text file. Make screenshot.  
    * see Screenshot 1
+   * see Chart description.md file
    
   

@@ -1,9 +1,12 @@
 package app
 
+import com.typesafe.scalalogging.Logger
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 
 class ElasticDataSaver {
+
+  private val LOG = Logger(getClass)
 
   def main(args: Array[String]) = {
 
@@ -13,8 +16,10 @@ class ElasticDataSaver {
       .getOrCreate()
     ss.sparkContext.setLogLevel("error")
 
+
     val hotelsWeather = ss.read.format("parquet").load("/tmp/201bd/dataset/hotels-weather-valid/")
 
+    LOG.info("downloaded hotels-weather data")
     val hw = hotelsWeather.limit(300000)
 
     val expedia = ss.read.format("com.databricks.spark.avro").load("/tmp/201bd/dataset/expedia_valid_data/")
@@ -35,6 +40,8 @@ class ElasticDataSaver {
       .format("parquet")
       .schema(hotelsWeatherExpediaFiltered.schema)
       .load("/tmp/201bd/dataset/hotels_weather_expedia_valid/")
+
+    LOG.info("Starting stream for saving hotels-weather-expedia data to elasticsearch")
 
     //saving data to ElasticSearch
     hotelsWetherExpediaStream.writeStream
